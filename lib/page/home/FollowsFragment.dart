@@ -26,15 +26,20 @@ class _FollowsListViewState extends State<FollowsListView> {
         Row(
           children: <Widget>[
             buildContent(''),
-            Image.asset('assets/article_pre.png',width: 80,height: 50,)
+            Image.asset(
+              'assets/article_pre.png',
+              width: 80,
+              height: 50,
+            )
           ],
         ),
       ],
     );
   }
-  Widget buildTitle(String title){
+
+  Widget buildTitle(String title) {
     return Padding(
-      padding: EdgeInsets.only(left:16.0, top:16.0, right:0.0, bottom:5.0),
+      padding: EdgeInsets.only(left: 16.0, top: 16.0, right: 0.0, bottom: 5.0),
       child: new Text(
         "Flutter为什么这么垃圾?",
         textAlign: TextAlign.start,
@@ -42,29 +47,40 @@ class _FollowsListViewState extends State<FollowsListView> {
       ),
     );
   }
-  Widget buildContent(String content){
+
+  Widget buildContent(String content) {
     return new Container(
       height: 50,
-      width: 400,
+      width: 300,
       child: Padding(
-        padding: EdgeInsets.only(left:16.0, top:0.0, right:0.0, bottom:0.0),
-        child:new Text("hello world hello world hello world hello world hello world hello world",
-        textAlign: TextAlign.start,
-        style: new TextStyle(
-        color: Colors.grey,
-        fontSize: 18.0,
-        )
-        )
-      ),
+          padding:
+              EdgeInsets.only(left: 16.0, top: 0.0, right: 0.0, bottom: 0.0),
+          child: new Text(
+              "hello world hello world hello world hello world hello world hello world",
+              textAlign: TextAlign.start,
+              style: new TextStyle(
+                color: Colors.grey,
+                fontSize: 18.0,
+              ))),
     );
-
   }
+
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
+    var _scrolly = 35;
+    return new NotificationListener(
+      onNotification: (ScrollUpdateNotification note) {
+        print(note.scrollDelta.toInt());  // 滚动位置。
+        if(note.scrollDelta.toInt()>0){
+          ListNotification(false).dispatch(context);
+        }else{
+          ListNotification(true).dispatch(context);
+        }
+      },
+        child: ListView.separated(
       itemCount: _words.length,
       itemBuilder: (context, index) {
-        //如果到了表尾
+        //如果到了表尾Ò
         if (_words[index] == loadingTag) {
           //不足100条，继续获取数据
           if (_words.length - 1 < 100) {
@@ -95,7 +111,7 @@ class _FollowsListViewState extends State<FollowsListView> {
 //        return ListTile(title: Text(_words[index]));
       },
       separatorBuilder: (context, index) => Divider(height: .0),
-    );
+    ));
   }
 
   void _retrieveData() {
@@ -112,3 +128,8 @@ class _FollowsListViewState extends State<FollowsListView> {
 }
 
 //Item 布局
+
+class ListNotification extends Notification{
+  ListNotification(this.isUp);
+  final bool isUp;
+}

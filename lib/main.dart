@@ -3,6 +3,8 @@ import './page/HomePage.dart';
 import './page/MinePage.dart';
 import './page/NotifyPage.dart';
 import './page/VipPage.dart';
+import './page/home/FollowsFragment.dart';
+
 import 'dart:developer';
 
 void main() => runApp(MyApp());
@@ -33,9 +35,11 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   int _tabIndex = 0;
+  bool isup = false;
   var appBarTitles = ['首页', '会员', '消息', '我的'];
   var tabImages;
   var _bodys;
+
   /*
    * 获取bottomTab的颜色和文字
    */
@@ -66,10 +70,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void initData() {
     tabImages = [
-      [getTabImage('assets/article.png'),getTabImage('assets/article_press.png')],
-      [getTabImage('assets/vip.png'),getTabImage('assets/vip_press.png')],
-      [getTabImage('assets/notify.png'),getTabImage('assets/notify_press.png')],
-      [getTabImage('assets/mine.png'),getTabImage('assets/mine_press.png')]
+      [
+        getTabImage('assets/article.png'),
+        getTabImage('assets/article_press.png')
+      ],
+      [getTabImage('assets/vip.png'), getTabImage('assets/vip_press.png')],
+      [
+        getTabImage('assets/notify.png'),
+        getTabImage('assets/notify_press.png')
+      ],
+      [getTabImage('assets/mine.png'), getTabImage('assets/mine_press.png')]
     ];
     _bodys = [
       new ArticlePage(),
@@ -88,27 +98,37 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     initData();
-    return Scaffold(
-      body: _bodys[_tabIndex],
-      bottomNavigationBar: new BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          new BottomNavigationBarItem(
-              title: getTabTitle(0), icon: getTabIcon(0)),
-          new BottomNavigationBarItem(
-              title: getTabTitle(1), icon: getTabIcon(1)),
-          new BottomNavigationBarItem(
-              title: getTabTitle(2), icon: getTabIcon(2)),
-          new BottomNavigationBarItem(
-              title: getTabTitle(3), icon: getTabIcon(3)),
-        ],
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _tabIndex,
-        onTap: (index){
+    return NotificationListener(
+        onNotification: (ListNotification note) {
+          print(note.isUp);
           setState(() {
-            _tabIndex = index;
+            isup = note.isUp;
           });
         },
-      ),
-    );
+        child: Scaffold(
+          body: _bodys[_tabIndex],
+          bottomNavigationBar: new Offstage(
+            offstage: !isup,
+            child: new BottomNavigationBar(
+              items: <BottomNavigationBarItem>[
+                new BottomNavigationBarItem(
+                    title: getTabTitle(0), icon: getTabIcon(0)),
+                new BottomNavigationBarItem(
+                    title: getTabTitle(1), icon: getTabIcon(1)),
+                new BottomNavigationBarItem(
+                    title: getTabTitle(2), icon: getTabIcon(2)),
+                new BottomNavigationBarItem(
+                    title: getTabTitle(3), icon: getTabIcon(3)),
+              ],
+              type: BottomNavigationBarType.fixed,
+              currentIndex: _tabIndex,
+              onTap: (index) {
+                setState(() {
+                  _tabIndex = index;
+                });
+              },
+            ),
+          ),
+        ));
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import './home/FollowsFragment.dart';
 
-
 class ArticlePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -27,7 +26,12 @@ class _ScaffoldRouteState extends State<ArticlePage>
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        actions: <Widget>[Icon(Icons.list,color: Colors.black,)],
+        actions: <Widget>[
+          Icon(
+            Icons.list,
+            color: Colors.black,
+          )
+        ],
         title: TextField(
           style: TextStyle(fontSize: 20),
           decoration: InputDecoration(
@@ -52,15 +56,16 @@ class _ScaffoldRouteState extends State<ArticlePage>
         controller: _tabController,
         children: tabs.map((e) {
           //创建3个Tab页
-          if(e == '关注'){
-            return FollowsListView();
-          }else{
+          if (e == '关注') {
+            return new NotificationListener(
+
+                child: FollowsListView());
+          } else {
             return Container(
               alignment: Alignment.center,
               child: Text(e, textScaleFactor: 5),
             );
           }
-
         }).toList(),
       ),
     );

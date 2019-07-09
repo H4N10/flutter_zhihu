@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+import './DetailPage.dart';
+import '../route/SlideRightRoute.dart';
 
 class FollowsListView extends StatefulWidget {
   @override
@@ -16,24 +18,35 @@ class _FollowsListViewState extends State<FollowsListView> {
     _retrieveData();
   }
 
+  void goDetail() {
+    Navigator.push(context, new SlideRightRoute(page: DetailsPage()));
+  }
+
   Widget buildItems(String text) {
-    return new Column(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        buildTitle("Flutter 为什么这么垃圾?"),
-        Row(
-          children: <Widget>[
-            buildContent(''),
-            Image.asset(
-              'assets/article_pre.png',
-              width: 80,
-              height: 50,
-            )
-          ],
-        ),
-      ],
+    return new GestureDetector(
+      onTap: () {
+        goDetail();
+      },
+      child: new Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          buildTitle("Flutter 为什么这么垃圾?"),
+          Row(
+            children: <Widget>[
+              buildContent(''),
+              new Flexible(
+                  flex: 1,
+                  child: Image.asset(
+                'assets/article_pre.png',
+                width: 80,
+                height: 50,
+              ))
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -49,9 +62,8 @@ class _FollowsListViewState extends State<FollowsListView> {
   }
 
   Widget buildContent(String content) {
-    return new Container(
-      height: 50,
-      width: 300,
+    return new Flexible(
+      flex: 4,
       child: Padding(
           padding:
               EdgeInsets.only(left: 16.0, top: 0.0, right: 0.0, bottom: 0.0),
@@ -68,6 +80,7 @@ class _FollowsListViewState extends State<FollowsListView> {
   @override
   Widget build(BuildContext context) {
     var _scrolly = 35;
+
     return new NotificationListener(
         onNotification: (ScrollUpdateNotification note) {
           print(note.scrollDelta.toInt()); // 滚动位置。

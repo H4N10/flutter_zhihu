@@ -58,7 +58,6 @@ class _ScaffoldRouteState extends State<ArticlePage>
           //创建3个Tab页
           if (e == '关注') {
             return new NotificationListener(
-
                 child: FollowsListView());
           } else {
             return Container(

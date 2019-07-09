@@ -35,11 +35,11 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   int _tabIndex = 0;
-  bool isup = false;
+  bool isup = true;
   var appBarTitles = ['首页', '会员', '消息', '我的'];
   var tabImages;
   var _bodys;
-
+  AnimatedContainer _container;
   /*
    * 获取bottomTab的颜色和文字
    */
@@ -98,35 +98,43 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     initData();
+    initState(){
+    }
     return NotificationListener(
         onNotification: (ListNotification note) {
           print(note.isUp);
           setState(() {
             isup = note.isUp;
+            if(!note.isUp){
+
+            }
           });
         },
-        child: Scaffold(
-          body: _bodys[_tabIndex],
-          bottomNavigationBar: new Offstage(
-            offstage: !isup,
-            child: new BottomNavigationBar(
-              items: <BottomNavigationBarItem>[
-                new BottomNavigationBarItem(
-                    title: getTabTitle(0), icon: getTabIcon(0)),
-                new BottomNavigationBarItem(
-                    title: getTabTitle(1), icon: getTabIcon(1)),
-                new BottomNavigationBarItem(
-                    title: getTabTitle(2), icon: getTabIcon(2)),
-                new BottomNavigationBarItem(
-                    title: getTabTitle(3), icon: getTabIcon(3)),
-              ],
-              type: BottomNavigationBarType.fixed,
-              currentIndex: _tabIndex,
-              onTap: (index) {
-                setState(() {
-                  _tabIndex = index;
-                });
-              },
+        child: AnimatedContainer(duration: Duration(seconds: 3),
+          curve: Curves.easeOut,
+          child: Scaffold(
+            body: _bodys[_tabIndex],
+            bottomNavigationBar: new Offstage(
+              offstage: !isup,
+              child: new BottomNavigationBar(
+                items: <BottomNavigationBarItem>[
+                  new BottomNavigationBarItem(
+                      title: getTabTitle(0), icon: getTabIcon(0)),
+                  new BottomNavigationBarItem(
+                      title: getTabTitle(1), icon: getTabIcon(1)),
+                  new BottomNavigationBarItem(
+                      title: getTabTitle(2), icon: getTabIcon(2)),
+                  new BottomNavigationBarItem(
+                      title: getTabTitle(3), icon: getTabIcon(3)),
+                ],
+                type: BottomNavigationBarType.fixed,
+                currentIndex: _tabIndex,
+                onTap: (index) {
+                  setState(() {
+                    _tabIndex = index;
+                  });
+                },
+              ),
             ),
           ),
         ));

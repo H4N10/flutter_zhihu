@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import './home/FollowsFragment.dart';
-
+import './home/SearchPage.dart';
 class ArticlePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -33,6 +33,9 @@ class _ScaffoldRouteState extends State<ArticlePage>
           )
         ],
         title: TextField(
+          onTap: ()=>Navigator.push(context, new MaterialPageRoute(builder:(BuildContext context){
+            return new SearchWidge();
+          })),
           style: TextStyle(fontSize: 20),
           decoration: InputDecoration(
               prefixIcon: Icon(

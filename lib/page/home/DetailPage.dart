@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_zhihu/video/VideoPlayerHelper.dart';
 class DetailsPage extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
@@ -15,12 +15,9 @@ class _DetailsState extends State<DetailsPage>{
     // TODO: implement build
     return  Scaffold(
 
-      body: SafeArea(
-          child: RaisedButton(
-              child: Text("Detail"),
-              onPressed: () {
-              })),
+      body: new VideoApp(),
     );
   }
+
 
 }

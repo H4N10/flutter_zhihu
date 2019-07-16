@@ -4,7 +4,9 @@ import './page/MinePage.dart';
 import './page/NotifyPage.dart';
 import './page/VipPage.dart';
 import './page/home/FollowsFragment.dart';
-
+import 'package:scoped_model/scoped_model.dart';
+import 'model/FollowsModel.dart';
+import 'model/MainModel.dart';
 import 'dart:developer';
 
 void main() => runApp(MyApp());
@@ -94,49 +96,41 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
     });
   }
-
+  MainModel followsModel = MainModel();
   @override
   Widget build(BuildContext context) {
     initData();
     initState(){
     }
-    return NotificationListener(
-        onNotification: (ListNotification note) {
-          print(note.isUp);
-          setState(() {
-            isup = note.isUp;
-            if(!note.isUp){
-
-            }
-          });
-        },
-        child: AnimatedContainer(duration: Duration(seconds: 3),
-          curve: Curves.easeOut,
-          child: Scaffold(
-            body: _bodys[_tabIndex],
-            bottomNavigationBar: new Offstage(
-              offstage: !isup,
-              child: new BottomNavigationBar(
-                items: <BottomNavigationBarItem>[
-                  new BottomNavigationBarItem(
-                      title: getTabTitle(0), icon: getTabIcon(0)),
-                  new BottomNavigationBarItem(
-                      title: getTabTitle(1), icon: getTabIcon(1)),
-                  new BottomNavigationBarItem(
-                      title: getTabTitle(2), icon: getTabIcon(2)),
-                  new BottomNavigationBarItem(
-                      title: getTabTitle(3), icon: getTabIcon(3)),
-                ],
-                type: BottomNavigationBarType.fixed,
-                currentIndex: _tabIndex,
-                onTap: (index) {
-                  setState(() {
-                    _tabIndex = index;
-                  });
-                },
-              ),
+    return ScopedModel<MainModel>(
+      model: followsModel,
+      child: Scaffold(
+        body: _bodys[_tabIndex],
+        bottomNavigationBar: ScopedModelDescendant<MainModel>(builder: (context,child,model){
+          return new Offstage(
+            offstage: model.isUp,
+            child: new BottomNavigationBar(
+              items: <BottomNavigationBarItem>[
+                new BottomNavigationBarItem(
+                    title: getTabTitle(0), icon: getTabIcon(0)),
+                new BottomNavigationBarItem(
+                    title: getTabTitle(1), icon: getTabIcon(1)),
+                new BottomNavigationBarItem(
+                    title: getTabTitle(2), icon: getTabIcon(2)),
+                new BottomNavigationBarItem(
+                    title: getTabTitle(3), icon: getTabIcon(3)),
+              ],
+              type: BottomNavigationBarType.fixed,
+              currentIndex: _tabIndex,
+              onTap: (index) {
+                setState(() {
+                  _tabIndex = index;
+                });
+              },
             ),
-          ),
-        ));
+          );
+        }),
+      ),
+    );
   }
 }

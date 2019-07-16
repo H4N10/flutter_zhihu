@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import './DetailPage.dart';
 import '../route/SlideRightRoute.dart';
-
+import 'package:scoped_model/scoped_model.dart';
+import 'package:flutter_zhihu/model/FollowsModel.dart';
+import 'package:flutter_zhihu/model/MainModel.dart';
 class FollowsListView extends StatefulWidget {
   @override
   _FollowsListViewState createState() => new _FollowsListViewState();
@@ -81,50 +83,52 @@ class _FollowsListViewState extends State<FollowsListView> {
   Widget build(BuildContext context) {
     var _scrolly = 35;
 
-    return new NotificationListener(
-        onNotification: (ScrollUpdateNotification note) {
-          print(note.scrollDelta.toInt()); // 滚动位置。
-          if (note.scrollDelta.toInt() > 0) {
-            ListNotification(false).dispatch(context);
-          } else if (note.scrollDelta.toInt() != 0) {
-            ListNotification(true).dispatch(context);
-          }
-        },
-        child: ListView.separated(
-          itemCount: _words.length,
-          itemBuilder: (context, index) {
-            //如果到了表尾Ò
-            if (_words[index] == loadingTag) {
-              //不足100条，继续获取数据
-              if (_words.length - 1 < 100) {
-                //获取数据
-                _retrieveData();
-                //加载时显示loading
-                return Container(
-                  padding: const EdgeInsets.all(16.0),
-                  alignment: Alignment.center,
-                  child: SizedBox(
-                      width: 24.0,
-                      height: 24.0,
-                      child: CircularProgressIndicator(strokeWidth: 2.0)),
-                );
-              } else {
-                //已经加载了100条数据，不再获取数据。
-                return Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.all(16.0),
-                    child: Text(
-                      "没有更多了",
-                      style: TextStyle(color: Colors.grey),
-                    ));
-              }
+    return ScopedModelDescendant<MainModel>(builder: (context,child,model){
+      return  new NotificationListener(
+          onNotification: (ScrollUpdateNotification note) {
+            print(note.scrollDelta.toInt()); // 滚动位置。
+            if (note.scrollDelta.toInt() > 0) {
+              model.up(true);
+            } else if (note.scrollDelta.toInt() != 0) {
+              model.up(false);
             }
-            //显示单词列表项
-            return buildItems(_words[index]);
-//        return ListTile(title: Text(_words[index]));
           },
-          separatorBuilder: (context, index) => Divider(height: .0),
-        ));
+          child: ListView.separated(
+            itemCount: _words.length,
+            itemBuilder: (context, index) {
+              //如果到了表尾Ò
+              if (_words[index] == loadingTag) {
+                //不足100条，继续获取数据
+                if (_words.length - 1 < 100) {
+                  //获取数据
+                  _retrieveData();
+                  //加载时显示loading
+                  return Container(
+                    padding: const EdgeInsets.all(16.0),
+                    alignment: Alignment.center,
+                    child: SizedBox(
+                        width: 24.0,
+                        height: 24.0,
+                        child: CircularProgressIndicator(strokeWidth: 2.0)),
+                  );
+                } else {
+                  //已经加载了100条数据，不再获取数据。
+                  return Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.all(16.0),
+                      child: Text(
+                        "没有更多了",
+                        style: TextStyle(color: Colors.grey),
+                      ));
+                }
+              }
+              //显示单词列表项
+              return buildItems(_words[index]);
+//        return ListTile(title: Text(_words[index]));
+            },
+            separatorBuilder: (context, index) => Divider(height: .0),
+          ));
+    });
   }
 
   void _retrieveData() {

@@ -11,7 +11,7 @@ class SearchWidge extends StatefulWidget {
 }
 
 class _SearchState extends State<SearchWidge> {
-  List<String> searchHistory = new List();
+  var searchHistory = List();
 
   @override
   void initState() {
@@ -21,9 +21,13 @@ class _SearchState extends State<SearchWidge> {
   }
 
   void getHistory() {
+
     readSharedListString('search').then((List<String> val) {
-      searchHistory = val;
+      if(val!=null){
+        searchHistory = val;
+      }
     });
+
   }
 
   @override
@@ -54,42 +58,45 @@ class _SearchState extends State<SearchWidge> {
             textDirection: TextDirection.ltr,
             textCapitalization: TextCapitalization.sentences,
           )),
-      body: new ListView.separated(
-          itemBuilder: (BuildContext context, int index) {
-            if (index == 0) {
-              return Padding(
-                padding: EdgeInsets.all(12.0),
-                child: Row(
-                  children: <Widget>[
-                    new Text(
-                      '搜索历史',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    new Text(
-                      '清空记录',
-                      textAlign: TextAlign.right,
-                      style: TextStyle(fontSize: 15),
-                    )
-                  ],
+      body: new Column(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(12.0),
+            child: Row(
+              mainAxisAlignment:MainAxisAlignment.spaceBetween ,
+              children: <Widget>[
+                new Text(
+                  '搜索历史',
+                  style: TextStyle(fontSize: 16),
                 ),
-              );
-            } else {
-              return Padding(
-                padding: EdgeInsets.all(16.0),
-                child: new Text(
-                  searchHistory[index],
-                  style: TextStyle(fontSize: 18),
-                ),
-              );
-            }
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return new Container(
-              height: 1.0,
-              color: Colors.grey,
-            );
-          },
-          itemCount: searchHistory.length),
+                new Text(
+                  '清空记录',
+                  textAlign: TextAlign.right,
+                  style: TextStyle(fontSize: 15),
+                )
+              ],
+            ),
+          ),
+          new Expanded(
+              child: new ListView.separated(
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: new Text(
+                        searchHistory[index],
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return new Container(
+                      height: 1.0,
+                      color: Colors.grey,
+                    );
+                  },
+                  itemCount: searchHistory==null?0:searchHistory.length))
+        ],
+      ),
     );
   }
 }

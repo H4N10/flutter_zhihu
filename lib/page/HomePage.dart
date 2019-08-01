@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import './home/FollowsFragment.dart';
 import './home/SearchPage.dart';
+import './home/search_page.dart';
+import 'package:flutter_zhihu/global_config.dart';
+
 class ArticlePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -25,7 +28,7 @@ class _ScaffoldRouteState extends State<ArticlePage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: GlobalConfig.searchBackgroundColor,
         actions: <Widget>[
           Icon(
             Icons.list,
@@ -34,7 +37,7 @@ class _ScaffoldRouteState extends State<ArticlePage>
         ],
         title: TextField(
           onTap: ()=>Navigator.push(context, new MaterialPageRoute(builder:(BuildContext context){
-            return new SearchWidge();
+            return new SearchPage();
           })),
           style: TextStyle(fontSize: 20),
           decoration: InputDecoration(

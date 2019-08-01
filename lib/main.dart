@@ -8,6 +8,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'model/FollowsModel.dart';
 import 'model/MainModel.dart';
 import 'dart:developer';
+import 'package:flutter_zhihu/global_config.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,10 +17,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: GlobalConfig.themeData,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }

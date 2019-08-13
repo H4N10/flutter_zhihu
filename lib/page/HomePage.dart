@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import './home/FollowsFragment.dart';
 import './home/SearchPage.dart';
-import './home/search_page.dart';
+import './home/Search_page.dart';
 import 'package:flutter_zhihu/global_config.dart';
-
+import './home/Hot.dart';
 class ArticlePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -36,7 +36,8 @@ class _ScaffoldRouteState extends State<ArticlePage>
           )
         ],
         title: TextField(
-          onTap: ()=>Navigator.push(context, new MaterialPageRoute(builder:(BuildContext context){
+          onTap: () => Navigator.push(context,
+              new MaterialPageRoute(builder: (BuildContext context) {
             return new SearchPage();
           })),
           style: TextStyle(fontSize: 20),
@@ -63,13 +64,11 @@ class _ScaffoldRouteState extends State<ArticlePage>
         children: tabs.map((e) {
           //创建3个Tab页
           if (e == '关注') {
-            return new NotificationListener(
-                child: FollowsListView());
+            return new NotificationListener(child: FollowsListView());
+          } else if (e == '推荐') {
+            return new NotificationListener(child: FollowsListView());
           } else {
-            return Container(
-              alignment: Alignment.center,
-              child: Text(e, textScaleFactor: 5),
-            );
+            return new NotificationListener(child: Hot());
           }
         }).toList(),
       ),

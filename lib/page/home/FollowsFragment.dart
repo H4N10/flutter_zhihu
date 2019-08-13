@@ -7,7 +7,7 @@ import 'package:flutter_zhihu/model/FollowsModel.dart';
 import 'package:flutter_zhihu/model/MainModel.dart';
 import 'package:flutter_zhihu/global_config.dart';
 
-import 'detail_page.dart';
+import 'Detail_page.dart';
 
 class FollowsListView extends StatefulWidget {
   @override

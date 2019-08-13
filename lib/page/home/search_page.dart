@@ -26,7 +26,7 @@ class SearchPageState extends State<SearchPage> {
             child: new TextField(
               autofocus: true,
               decoration: new InputDecoration.collapsed(
-                  hintText: "搜索比乎内容",
+                  hintText: "搜索知乎内容",
                   hintStyle: new TextStyle(color: GlobalConfig.fontColor)
               ),
             ),

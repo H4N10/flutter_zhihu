@@ -25,7 +25,6 @@ Future setSpInt(String key,int value) async {
   print('存储:$value');
 }
 Future setSpStringList(String key,List<String> value) async {
-  debugger();
   SharedPreferences preferences = await SharedPreferences.getInstance();
   preferences.setStringList(key, value);
   print('存储:$value');

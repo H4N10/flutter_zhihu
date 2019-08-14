@@ -13,6 +13,7 @@ class Hot extends StatefulWidget {
 class HotState extends State<Hot> {
   static Widget hotCard(Question question) {
     return new Container(
+      color: GlobalConfig.cardBackgroundColor,
       child: new FlatButton(
           onPressed: () {},
           child: new Container(

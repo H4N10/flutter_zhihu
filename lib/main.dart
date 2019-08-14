@@ -9,7 +9,7 @@ import 'model/FollowsModel.dart';
 import 'model/MainModel.dart';
 import 'dart:developer';
 import 'package:flutter_zhihu/global_config.dart';
-
+import 'my/My_page.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -86,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
       new ArticlePage(),
       new VipPage(),
       new NotifyPage(),
-      new MinePage()
+      new MyPage()
     ];
   }
 
@@ -104,6 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return ScopedModel<MainModel>(
       model: followsModel,
       child: Scaffold(
+        backgroundColor: GlobalConfig.cardBackgroundColor,
         body: _bodys[_tabIndex],
         bottomNavigationBar: ScopedModelDescendant<MainModel>(builder: (context,child,model){
           return new Offstage(
@@ -120,6 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     title: getTabTitle(3), icon: getTabIcon(3)),
               ],
               type: BottomNavigationBarType.fixed,
+              backgroundColor: GlobalConfig.searchBackgroundColor,
               currentIndex: _tabIndex,
               onTap: (index) {
                 setState(() {

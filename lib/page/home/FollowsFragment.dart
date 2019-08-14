@@ -29,53 +29,58 @@ class _FollowsListViewState extends State<FollowsListView> {
   }
 
   Widget buildItems(String text) {
-    return new GestureDetector(
-      onTap: () {
-        goDetail();
-      },
-      child: new Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          buildTitle("聊聊 Android 的打包..."),
-          Row(
-            children: <Widget>[
-              buildContent(''),
-              new Flexible(
-                  flex: 1,
-                  child: Image.asset(
-                    'assets/article_pre.png',
-                    width: 80,
-                    height: 50,
-                  ))
-            ],
-          ),
-          new Container(
-            child: new Row(
+    return new Container(
+      color: GlobalConfig.cardBackgroundColor,
+      child: new GestureDetector(
+        onTap: () {
+          goDetail();
+        },
+        child: new Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            buildTitle("聊聊 Android 的打包..."),
+            Row(
               children: <Widget>[
-                new Expanded(
-                    child: new Text('30' + " 赞同 · " + '17' + "评论",
-                        style: new TextStyle(color: GlobalConfig.fontColor))),
-                new PopupMenuButton(
-                    icon: new Icon(
-                      Icons.linear_scale,
-                      color: GlobalConfig.fontColor,
-                    ),
-                    itemBuilder: (BuildContext context) =>
-                        <PopupMenuItem<String>>[
-                          new PopupMenuItem<String>(
-                              value: '选项一的值', child: new Text('屏蔽这个问题')),
-                          new PopupMenuItem<String>(
-                              value: '选项二的值', child: new Text('取消关注 learner')),
-                          new PopupMenuItem<String>(
-                              value: '选项二的值', child: new Text("举报"))
-                        ])
+                buildContent(''),
+                new Flexible(
+                    flex: 1,
+                    child: Image.asset(
+                      'assets/article_pre.png',
+                      width: 80,
+                      height: 50,
+                    ))
               ],
             ),
-            padding: EdgeInsets.only(left: 16.0, top: 0.0, right: 0.0, bottom: 5.0),
-          )
-        ],
+            new Container(
+              child: new Row(
+                children: <Widget>[
+                  new Expanded(
+                      child: new Text('30' + " 赞同 · " + '17' + "评论",
+                          style: new TextStyle(color: GlobalConfig.fontColor))),
+                  new PopupMenuButton(
+                      icon: new Icon(
+                        Icons.linear_scale,
+                        color: GlobalConfig.fontColor,
+                      ),
+                      itemBuilder: (BuildContext context) =>
+                          <PopupMenuItem<String>>[
+                            new PopupMenuItem<String>(
+                                value: '选项一的值', child: new Text('屏蔽这个问题')),
+                            new PopupMenuItem<String>(
+                                value: '选项二的值',
+                                child: new Text('取消关注 learner')),
+                            new PopupMenuItem<String>(
+                                value: '选项二的值', child: new Text("举报"))
+                          ])
+                ],
+              ),
+              padding: EdgeInsets.only(
+                  left: 16.0, top: 0.0, right: 0.0, bottom: 5.0),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -86,7 +91,7 @@ class _FollowsListViewState extends State<FollowsListView> {
       child: new Text(
         title,
         textAlign: TextAlign.start,
-        style: new TextStyle(fontSize: 18),
+        style: new TextStyle(fontSize: 18,color:  GlobalConfig.fontColor),
       ),
     );
   }
@@ -94,7 +99,8 @@ class _FollowsListViewState extends State<FollowsListView> {
   Widget buildContent(String content) {
     return new Flexible(
       flex: 4,
-      child: Padding(
+      child: Container(
+          color: GlobalConfig.cardBackgroundColor,
           padding:
               EdgeInsets.only(left: 16.0, top: 0.0, right: 0.0, bottom: 0.0),
           child: new Text(

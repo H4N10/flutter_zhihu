@@ -4,6 +4,8 @@ import './home/SearchPage.dart';
 import './home/Search_page.dart';
 import 'package:flutter_zhihu/global_config.dart';
 import './home/Hot.dart';
+import '../view/SearchBar.dart';
+
 class ArticlePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -26,31 +28,17 @@ class _ScaffoldRouteState extends State<ArticlePage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return new MaterialApp(
+        theme: GlobalConfig.themeData,
+        home: new Scaffold(
       appBar: AppBar(
-        backgroundColor: GlobalConfig.searchBackgroundColor,
         actions: <Widget>[
           Icon(
             Icons.list,
             color: Colors.black,
           )
         ],
-        title: TextField(
-          onTap: () => Navigator.push(context,
-              new MaterialPageRoute(builder: (BuildContext context) {
-            return new SearchPage();
-          })),
-          style: TextStyle(fontSize: 20),
-          decoration: InputDecoration(
-              prefixIcon: Icon(
-                Icons.search,
-                color: Colors.black,
-              ),
-//              contentPadding: const EdgeInsets.only(left:0.0,top:0.0,right:0.0,bottom:15.0),
-              hintText: '请输入搜索内容...'),
-          textDirection: TextDirection.ltr,
-          textCapitalization: TextCapitalization.sentences,
-        ),
+        title: barSearch(),
         bottom: TabBar(
             //生成Tab菜单
             unselectedLabelColor: Colors.grey,
@@ -72,6 +60,6 @@ class _ScaffoldRouteState extends State<ArticlePage>
           }
         }).toList(),
       ),
-    );
+    ));
   }
 }
